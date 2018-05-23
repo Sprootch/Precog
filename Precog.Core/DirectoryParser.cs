@@ -9,8 +9,11 @@ namespace Precog.Core
 {
     public class DirectoryParser
     {
-        public DirectoryParser()
+        private readonly IFileEnumerator fileEnumerator;
+
+        public DirectoryParser(IFileEnumerator fileEnumerator)
         {
+            this.fileEnumerator = fileEnumerator;
             Excludes = new List<string>();
         }
 
@@ -19,7 +22,7 @@ namespace Precog.Core
         public IEnumerable<string> Parse(string path, string searchPattern)
         {
             var result = new List<string>();
-            foreach (var file in Directory.EnumerateFiles(path, searchPattern, SearchOption.AllDirectories))
+            foreach (var file in fileEnumerator.EnumerateFiles(path, searchPattern))
             {
                 if (!Excludes.Any(e => file.ToUpperInvariant().Contains(e.ToUpperInvariant())))
                 {

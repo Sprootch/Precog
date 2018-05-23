@@ -8,7 +8,7 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            var d = new DirectoryParser();
+            var d = new DirectoryParser(new FileSystemEnumerator());
             d.Excludes.Add("NLog.config");
             d.Excludes.Add("transform");
             d.Excludes.Add("artifact_bkp");
