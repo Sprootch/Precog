@@ -6,9 +6,9 @@ using Precog.MainForm.Extensions;
 
 namespace Precog.MainForm
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -41,6 +41,13 @@ namespace Precog.MainForm
 
             progressBar1.Value = 100;
             progressBar1.SetState(error ? ProgressBarColor.Red : ProgressBarColor.Green);
+            progressBar1.Invalidate();
+            progressBar1.Refresh();
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

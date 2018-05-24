@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Precog.IntegrationTests", "Precog.IntegrationTests\Precog.IntegrationTests.csproj", "{E9E609D7-C74E-4C62-B85E-D46E2F1A9E78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Precog.MainForm", "Precog.MainForm\Precog.MainForm.csproj", "{CEE03859-CEFC-4F6F-BCD6-12785408F4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Precog.WinForm", "Precog.MainForm\Precog.WinForm.csproj", "{CEE03859-CEFC-4F6F-BCD6-12785408F4D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
