@@ -31,7 +31,7 @@
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new NewProgressBar();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.outputTextBox = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -142,7 +142,7 @@
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button button1;
-        private NewProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.RichTextBox outputTextBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Precog.MainForm
+namespace Precog.MainForm.Extensions
 {
     public static class RichTextBoxExtensions
     {
@@ -21,5 +21,4 @@ namespace Precog.MainForm
             box.AppendText(text + Environment.NewLine);
         }
     }
-
 }

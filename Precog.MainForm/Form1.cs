@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Precog.Core;
+using Precog.MainForm.Extensions;
 
 namespace Precog.MainForm
 {
@@ -38,7 +39,8 @@ namespace Precog.MainForm
                 }
             }
 
-            progressBar1.Update(100, error ? Brushes.Red : Brushes.Green);
+            progressBar1.Value = 100;
+            progressBar1.SetState(error ? ProgressBarColor.Red : ProgressBarColor.Green);
         }
     }
 }
