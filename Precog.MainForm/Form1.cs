@@ -15,12 +15,14 @@ namespace Precog.MainForm
         private void button1_Click(object sender, EventArgs e)
         {
             outputTextBox.ResetText();
+            progressBar1.Value = 0;
 
             var checker = new ConfigFileChecker();
             checker.AddExcludes("NLog.config", "transform", "artifact_bkp", "artifact\\default");
 
             var results = checker.Check(pathTextBox.Text);
 
+            bool error = false;
             foreach (var result in results)
             {
                 outputTextBox.AppendLine(result.ConfigFile);
@@ -32,8 +34,11 @@ namespace Precog.MainForm
                 else
                 {
                     outputTextBox.AppendText(result.Result, Color.Red);
+                    error = true;
                 }
             }
+
+            progressBar1.Update(100, error ? Brushes.Red : Brushes.Green);
         }
     }
 }

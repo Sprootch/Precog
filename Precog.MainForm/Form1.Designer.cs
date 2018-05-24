@@ -31,7 +31,7 @@
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new NewProgressBar();
             this.outputTextBox = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -76,8 +76,10 @@
             this.outputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputTextBox.DetectUrls = false;
             this.outputTextBox.Location = new System.Drawing.Point(12, 85);
             this.outputTextBox.Name = "outputTextBox";
+            this.outputTextBox.ReadOnly = true;
             this.outputTextBox.Size = new System.Drawing.Size(685, 335);
             this.outputTextBox.TabIndex = 3;
             this.outputTextBox.Text = "";
@@ -140,7 +142,7 @@
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private NewProgressBar progressBar1;
         private System.Windows.Forms.RichTextBox outputTextBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
