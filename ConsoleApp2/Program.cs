@@ -1,45 +1,34 @@
 ﻿using System;
-using System.IO;
+using NLog;
 using Precog.Core;
 
 namespace ConsoleApp2
 {
     class Program
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
-            var d = new DirectoryParser(new FileSystemEnumerator());
-            d.Excludes.Add("NLog.config");
-            d.Excludes.Add("transform");
-            d.Excludes.Add("artifact_bkp");
+            var checker = new ConfigFileChecker();
+            checker.AddExcludes("NLog.config", "transform", "artifact_bkp");
 
-            var configs = d.Parse(@"C:\Projects\Censy\sources\Deploy\", "*.config");
+            var results = checker.Check(@"C:\Projects\Censy\sources\Deploy\");
 
-            foreach (var config in configs)
+            foreach (var result in results)
             {
-                ProcessConfig(config);
-                Console.WriteLine();
+                _logger.Debug(result.ConfigFile);
+                if (result.Status == ConfigStatus.Success)
+                {
+                    _logger.Info(result.Result);
+                }
+                else
+                {
+                    _logger.Error(result.Result);
+                }
             }
 
             Console.ReadKey();
-        }
-
-        private static void ProcessConfig(string config)
-        {
-            try
-            {
-                Console.WriteLine(config);
-                var services = new ConfigFileParser(config).GetServices();
-                foreach (var service in services)
-                {
-                    Console.WriteLine(service.Address);
-                    Console.WriteLine(service.Identity);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
         }
     }
 }
