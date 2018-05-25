@@ -2,13 +2,14 @@
 using System.Configuration;
 using System.IO;
 using System.ServiceModel.Configuration;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 
 namespace Precog.Core
 {
     public class ConfigFileParser
     {
-        private  Configuration _configFile;
+        private Configuration _configFile;
         private readonly string configFilePath;
 
         public ConfigFileParser(string configFilePath)
@@ -17,6 +18,11 @@ namespace Precog.Core
             if (!File.Exists(configFilePath)) throw new ArgumentException("Config file does not exists!");
 
             this.configFilePath = configFilePath;
+        }
+
+        public async Task<Result<string>> AnalyzeAsync()
+        {
+            return await Task.Run(() => Analyze());
         }
 
         public Result<string> Analyze()

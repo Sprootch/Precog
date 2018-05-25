@@ -47,6 +47,7 @@
     <Compile Include="ConfigFileChecker.cs" />
     <Compile Include="ConfigFileParser.cs" />
     <Compile Include="ConfigFileResult.cs" />
+    <Compile Include="ConfigProgress.cs" />
     <Compile Include="ConfigStatus.cs" />
     <Compile Include="DirectoryParser.cs" />
     <Compile Include="FileSystemEnumerator.cs" />
