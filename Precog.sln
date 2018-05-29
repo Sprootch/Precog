@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Precog.UnitTests", "Precog.UnitTests\Precog.UnitTests.csproj", "{B7F61DF5-1808-4A54-9DF2-FB78903CF9CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Precog.IntegrationTests", "Precog.IntegrationTests\Precog.IntegrationTests.csproj", "{E9E609D7-C74E-4C62-B85E-D46E2F1A9E78}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CEE03859-CEFC-4F6F-BCD6-12785408F4D8} = {CEE03859-CEFC-4F6F-BCD6-12785408F4D8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Precog.WinForm", "Precog.MainForm\Precog.WinForm.csproj", "{CEE03859-CEFC-4F6F-BCD6-12785408F4D8}"
 EndProject

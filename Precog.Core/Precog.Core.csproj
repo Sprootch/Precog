@@ -46,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigFileChecker.cs" />
+    <Compile Include="ConfigFileOpener.cs" />
     <Compile Include="ConfigFileParser.cs" />
     <Compile Include="ConfigFileResult.cs" />
-    <Compile Include="ConfigProgress.cs" />
-    <Compile Include="ConfigStatus.cs" />
+    <Compile Include="ConfigMessage.cs" />
+    <Compile Include="Severity.cs" />
     <Compile Include="DirectoryParser.cs" />
     <Compile Include="FileSystemEnumerator.cs" />
     <Compile Include="IFileEnumerator.cs" />

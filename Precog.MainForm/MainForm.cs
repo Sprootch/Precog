@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Precog.Core;
 using Precog.MainForm.Extensions;
@@ -13,7 +14,7 @@ namespace Precog.MainForm
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
             outputTextBox.ResetText();
@@ -22,7 +23,7 @@ namespace Precog.MainForm
             bool error = false;
             try
             {
-                error = CheckConfigFiles();
+                await CheckConfigFiles();
 
                 progressBar1.Value = 100;
                 progressBar1.SetState(error ? ProgressBarColor.Red : ProgressBarColor.Green);
@@ -39,40 +40,61 @@ namespace Precog.MainForm
             }
         }
 
-        private bool CheckConfigFiles()
+        private async Task CheckConfigFiles()
         {
             var checker = new ConfigFileChecker();
             checker.AddExcludes("NLog.config", "transform", "artifact_bkp", "artifact\\default", "OLD_CONFIG");
 
-            var results = checker.Check(pathTextBox.Text);
+            await checker.CheckAsync(pathTextBox.Text, new ProgressDisplayer(this));
 
-            bool error = false;
-            foreach (var result in results)
-            {
-                outputTextBox.AppendLine(result.ConfigFile);
+            //bool error = false;
+            //foreach (var result in results)
+            //{
+            //    outputTextBox.AppendLine(result.ConfigFile);
 
-                if (result.Status == ConfigStatus.Success)
-                {
-                    outputTextBox.AppendText(result.Result, Color.Green);
-                }
-                else
-                {
-                    outputTextBox.AppendText(result.Result, Color.Red);
-                    error = true;
-                }
-            }
+            //    if (result.Status == Severity.Success)
+            //    {
+            //        outputTextBox.AppendText(result.Result, Color.Green);
+            //    }
+            //    else
+            //    {
+            //        outputTextBox.AppendText(result.Result, Color.Red);
+            //        error = true;
+            //    }
+            //}
 
-            return error;
-        }
-
-        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+            //return error;
         }
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private class ProgressDisplayer : IProgress<ConfigMessage>
+        {
+            public ProgressDisplayer(MainForm form)
+            {
+                Form = form;
+            }
+
+            public MainForm Form { get; }
+
+            public void Report(ConfigMessage message)
+            {
+                if (message.Severity == Severity.Success)
+                {
+                    Form.outputTextBox.AppendLine(message.Message, Color.Green);
+                }
+                else if (message.Severity == Severity.Error)
+                {
+                    Form.outputTextBox.AppendLine(message.Message, Color.Red);
+                }
+                else
+                {
+                    Form.outputTextBox.AppendLine(message.Message);
+                }
+            }
         }
     }
 }

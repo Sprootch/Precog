@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Extensions\ProgressBarExtensions.cs" />
+    <Compile Include="ProgressDisplayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\RichTextBoxExtensions.cs" />
     <EmbeddedResource Include="MainForm.resx">

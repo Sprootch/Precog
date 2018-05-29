@@ -6,7 +6,7 @@ namespace Precog.MainForm.Extensions
 {
     public static class RichTextBoxExtensions
     {
-        public static void AppendText(this RichTextBox box, string text, Color color)
+        public static void AppendLine(this RichTextBox box, string text, Color color)
         {
             box.SelectionStart = box.TextLength;
             box.SelectionLength = 0;
@@ -18,7 +18,7 @@ namespace Precog.MainForm.Extensions
 
         public static void AppendLine(this RichTextBox box, string text)
         {
-            box.AppendText(text + Environment.NewLine);
+            box.AppendText($"{text}{Environment.NewLine}");
         }
     }
 }
