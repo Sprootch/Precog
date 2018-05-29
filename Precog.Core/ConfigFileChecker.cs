@@ -32,7 +32,7 @@ namespace Precog.Core
                     continue;
                 }
 
-                progress?.Report(ConfigMessage.Info("OK"));
+                progress?.Report(ConfigMessage.Success("OK"));
             }
         }
 

@@ -20,5 +20,10 @@
         {
             return new ConfigMessage(message, Severity.Info);
         }
+
+        internal static ConfigMessage Success(string message)
+        {
+            return new ConfigMessage(message, Severity.Success);
+        }
     }
 }

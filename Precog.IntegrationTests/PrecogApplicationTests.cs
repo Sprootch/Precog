@@ -42,6 +42,9 @@ namespace Precog.IntegrationTests
             var outputBox = _mainWindow.Get<TextBox>("outputTextBox");
             StringAssert.Contains(outputBox.Text, "Empty.config");
             StringAssert.Contains(outputBox.Text, "OK");
+
+            var progressBar = _mainWindow.Get<ProgressBar>("progressBar1");
+            Assert.AreEqual(100, progressBar.Value);
         }
 
         [TestMethod]
@@ -57,6 +60,9 @@ namespace Precog.IntegrationTests
             var outputBox = _mainWindow.Get<TextBox>("outputTextBox");
             StringAssert.Contains(outputBox.Text, "Invalid.config");
             StringAssert.Contains(outputBox.Text, "ERROR");
+
+            var progressBar = _mainWindow.Get<ProgressBar>("progressBar1");
+            Assert.AreEqual(100, progressBar.Value);
         }
     }
 }

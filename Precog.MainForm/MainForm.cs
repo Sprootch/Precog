@@ -26,9 +26,6 @@ namespace Precog.MainForm
                 await CheckConfigFiles();
 
                 progressBar1.Value = 100;
-                progressBar1.SetState(error ? ProgressBarColor.Red : ProgressBarColor.Green);
-                progressBar1.Invalidate();
-                progressBar1.Refresh();
             }
             catch (Exception ex)
             {
@@ -82,17 +79,28 @@ namespace Precog.MainForm
 
             public void Report(ConfigMessage message)
             {
-                if (message.Severity == Severity.Success)
+                if (Form.outputTextBox.InvokeRequired)
                 {
-                    Form.outputTextBox.AppendLine(message.Message, Color.Green);
-                }
-                else if (message.Severity == Severity.Error)
-                {
-                    Form.outputTextBox.AppendLine(message.Message, Color.Red);
+                    Form.outputTextBox.Invoke(new MethodInvoker(() => Report(message)));
                 }
                 else
                 {
-                    Form.outputTextBox.AppendLine(message.Message);
+                    if (message.Severity == Severity.Success)
+                    {
+                        Form.outputTextBox.AppendLine(message.Message, Color.Green);
+                    }
+                    else if (message.Severity == Severity.Error)
+                    {
+                        Form.outputTextBox.AppendLine(message.Message, Color.Red);
+                        Form.progressBar1.Value = 100;
+                        Form.progressBar1.SetState(ProgressBarColor.Red);
+                        Form.progressBar1.Refresh();
+                        Form.progressBar1.Invalidate();
+                    }
+                    else
+                    {
+                        Form.outputTextBox.AppendLine(message.Message);
+                    }
                 }
             }
         }
