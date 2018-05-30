@@ -5,7 +5,7 @@ namespace Precog.Core
 {
     public class RemoteConfigRetriever
     {
-        public Configuration GetRemoteConfiguration(string serviceAddress)
+        public string GetRemoteConfiguration(string serviceAddress)
         {
             var pInfo = new ProcessStartInfo(@"svcutil.exe", serviceAddress)
             {
@@ -14,7 +14,7 @@ namespace Precog.Core
             };
             Process.Start(pInfo);
 
-            return ConfigFileOpener.Open(@"output.config").Value;
+            return @"output.config";
         }
     }
 }

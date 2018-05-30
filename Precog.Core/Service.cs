@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Precog.Core
 {
+    [DebuggerDisplay("{Address} - {Identity}")]
     public class Service : IEquatable<Service>
     {
         public string Address { get; }

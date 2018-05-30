@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Precog.Core
@@ -40,17 +42,27 @@ namespace Precog.Core
                     continue;
                 }
 
-                var services = ServiceParser.GetServices(config.Value);
-                foreach (var service in services)
+                var clientServices = ServiceParser.GetServices(config.Value);
+                foreach (var clientService in clientServices)
                 {
-                    progress.Report(ConfigMessage.Info(service.ToString()));
-                    var remoteConfig = new RemoteConfigRetriever().GetRemoteConfiguration(service.Address);
+                    progress?.Report(ConfigMessage.Info(clientService.ToString()));
+                    var generatedConfigFile = new RemoteConfigRetriever().GetRemoteConfiguration(clientService.Address);
+                    Thread.Sleep(1000);
+                    var serverConfig = ConfigFileOpener.Open(generatedConfigFile).Value;
+                    var serverServices = ServiceParser.GetServices(serverConfig);
 
-                    //var x = ServiceParser.GetServices(remoteConfig);
+                    var correspondingService = serverServices.First(s => s.Binding == clientService.Binding);
+
+                    if (!correspondingService.Equals(clientService))
+                    {
+                        progress?.Report(ConfigMessage.Error("Client configuration does not match server configuration!"));
+                        progress?.Report(ConfigMessage.Error(correspondingService.ToString()));
+                    }
+                    else
+                    {
+                        progress?.Report(ConfigMessage.Success("OK"));
+                    }
                 }
-
-
-                progress?.Report(ConfigMessage.Success("OK"));
             }
         }
     }
