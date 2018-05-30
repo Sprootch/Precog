@@ -1,68 +1,56 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestStack.White;
-using TestStack.White.Factory;
-using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.WindowItems;
 
 namespace Precog.IntegrationTests
 {
     [TestClass]
     public class PrecogApplicationTests
     {
-        Application _precogApp;
-        Window _mainWindow;
+        private PrecogUI UI;
 
         public TestContext TestContext { get; set; }
 
         [TestInitialize]
         public void BeforeEachTest()
         {
-            _precogApp = Application.Launch(@"C:\Users\Vincent Delcoigne\Source\Repos\Precog\Precog.MainForm\bin\Debug\Precog.MainForm.exe");
+            UI = new PrecogUI();
 
-            _mainWindow = _precogApp.GetWindow(SearchCriteria.ByText("Precog"), InitializeOption.NoCache);
+            UI.StartApplication();
         }
 
         [TestCleanup]
         public void AfterEachTest()
         {
-            _mainWindow?.Close();
+            UI.StopApplication();
         }
 
         [TestMethod]
         [DeploymentItem("TestData\\Empty.config")]
         public void CanParseOneConfigFile()
         {
-            var textBox = _mainWindow.Get<TextBox>("pathTextBox");
-            textBox.Text = TestContext.TestDeploymentDir;
+            UI.DirectoryTextBox.Text = TestContext.TestDeploymentDir;
 
-            var button = _mainWindow.Get<Button>(SearchCriteria.ByText("Start"));
-            button.Click();
+            UI.StartButton.Click();
 
-            var outputBox = _mainWindow.Get<TextBox>("outputTextBox");
+            var outputBox = UI.OutputTextBox;
             StringAssert.Contains(outputBox.Text, "Empty.config");
             StringAssert.Contains(outputBox.Text, "OK");
 
-            var progressBar = _mainWindow.Get<ProgressBar>("progressBar1");
-            Assert.AreEqual(100, progressBar.Value);
+            Assert.AreEqual(100, UI.ProgressBar.Value);
         }
 
         [TestMethod]
         [DeploymentItem("TestData\\Invalid.config")]
         public void CanDetectInvalidConfigFiles()
         {
-            var textBox = _mainWindow.Get<TextBox>("pathTextBox");
-            textBox.Text = TestContext.TestDeploymentDir;
+            UI.DirectoryTextBox.Text = TestContext.TestDeploymentDir;
 
-            var button = _mainWindow.Get<Button>(SearchCriteria.ByText("Start"));
-            button.Click();
+            UI.StartButton.Click();
 
-            var outputBox = _mainWindow.Get<TextBox>("outputTextBox");
+            var outputBox = UI.OutputTextBox;
             StringAssert.Contains(outputBox.Text, "Invalid.config");
             StringAssert.Contains(outputBox.Text, "ERROR");
 
-            var progressBar = _mainWindow.Get<ProgressBar>("progressBar1");
-            Assert.AreEqual(100, progressBar.Value);
+            Assert.AreEqual(100, UI.ProgressBar.Value);
         }
     }
 }

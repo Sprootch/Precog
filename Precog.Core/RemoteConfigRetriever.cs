@@ -14,7 +14,7 @@ namespace Precog.Core
             };
             Process.Start(pInfo);
 
-            return ConfigFileOpener.Open(@"output.config");
+            return ConfigFileOpener.Open(@"output.config").Value;
         }
     }
 }
