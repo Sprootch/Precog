@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.IO;
 using System.ServiceModel.Configuration;
-using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 
 namespace Precog.Core
@@ -20,12 +19,7 @@ namespace Precog.Core
             this.configFilePath = configFilePath;
         }
 
-        public async Task<Result<string>> AnalyzeAsync()
-        {
-            return await Task.Run(() => Analyze());
-        }
-
-        public Result<string> Analyze()
+        public Result Analyze()
         {
             ChannelEndpointElementCollection endpoints;
             try
@@ -40,15 +34,8 @@ namespace Precog.Core
             }
             catch (Exception e)
             {
-                return Result.Fail<string>(e.Message);
+                return Result.Fail(e.Message);
             }
-
-            //for (int i = 0; i < endpoints.Count; i++)
-            //{
-            //    var endpointElement = endpoints[i];
-
-            //    var service = new Service(endpointElement.Address.OriginalString, endpointElement.Identity.UserPrincipalName.Value);
-            //}
 
             return Result.Ok("OK");
         }

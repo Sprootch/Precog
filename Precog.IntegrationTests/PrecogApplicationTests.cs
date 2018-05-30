@@ -40,7 +40,7 @@ namespace Precog.IntegrationTests
 
         [TestMethod]
         [DeploymentItem("TestData\\Invalid.config")]
-        public void CanDetectInvalidConfigFiles()
+        public void CanDetectInvalidConfig()
         {
             UI.DirectoryTextBox.Text = TestContext.TestDeploymentDir;
 
@@ -49,8 +49,20 @@ namespace Precog.IntegrationTests
             var outputBox = UI.OutputTextBox;
             StringAssert.Contains(outputBox.Text, "Invalid.config");
             StringAssert.Contains(outputBox.Text, "ERROR");
+        }
 
-            Assert.AreEqual(100, UI.ProgressBar.Value);
+        [TestMethod]
+        [DeploymentItem("TestData\\BindingMismatch.config")]
+        public void CanDetectBindingMismatch()
+        {
+            UI.DirectoryTextBox.Text = TestContext.TestDeploymentDir;
+
+            UI.StartButton.Click();
+
+            var outputBox = UI.OutputTextBox;
+            StringAssert.Contains(outputBox.Text, "BindingMismatch.config");
+            StringAssert.Contains(outputBox.Text, "ERROR");
+            StringAssert.Contains(outputBox.Text, "NOT_MATCHED");
         }
     }
 }
