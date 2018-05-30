@@ -8,7 +8,6 @@ namespace Precog.Core
     {
         DirectoryParser _directorParser = new DirectoryParser(new FileSystemEnumerator());
 
-
         public void AddExcludes(params string[] excludes)
         {
             _directorParser.Excludes.AddRange(excludes);
@@ -41,31 +40,18 @@ namespace Precog.Core
                     continue;
                 }
 
+                var services = ServiceParser.GetServices(config.Value);
+                foreach (var service in services)
+                {
+                    progress.Report(ConfigMessage.Info(service.ToString()));
+                    var remoteConfig = new RemoteConfigRetriever().GetRemoteConfiguration(service.Address);
+
+                    //var x = ServiceParser.GetServices(remoteConfig);
+                }
+
+
                 progress?.Report(ConfigMessage.Success("OK"));
             }
         }
-
-        //public List<ConfigFileResult> Check(string path)
-        //{
-        //    var files = _directorParser.Parse(path, "*.config");
-
-        //    List<ConfigFileResult> results = new List<ConfigFileResult>();
-        //    foreach (var file in files)
-        //    {
-        //        var configParser = new ConfigFileParser(file);
-
-        //        var result = configParser.Analyze();
-        //        if (result.IsFailure)
-        //        {
-        //            results.Add(new ConfigFileResult { ConfigFile = file, Result = result.Error, Status = Severity.Error });
-        //        }
-        //        else
-        //        {
-        //            results.Add(new ConfigFileResult { ConfigFile = file, Result = result.Value, Status = Severity.Success });
-        //        }
-        //    }
-
-        //    return results;
-        //}
     }
 }

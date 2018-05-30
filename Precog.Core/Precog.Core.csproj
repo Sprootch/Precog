@@ -50,6 +50,7 @@
     <Compile Include="ConfigFileParser.cs" />
     <Compile Include="ConfigFileResult.cs" />
     <Compile Include="ConfigMessage.cs" />
+    <Compile Include="ServiceParser.cs" />
     <Compile Include="Severity.cs" />
     <Compile Include="DirectoryParser.cs" />
     <Compile Include="FileSystemEnumerator.cs" />

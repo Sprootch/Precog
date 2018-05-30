@@ -18,7 +18,7 @@ namespace Precog.Core
 
         public override string ToString()
         {
-            return string.Format($"- {Address}{Environment.NewLine}- {Identity}{Environment.NewLine}- {Binding}");
+            return $"- {Address}{Environment.NewLine}- {Identity}";
         }
 
         public override bool Equals(object obj)

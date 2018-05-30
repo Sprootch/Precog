@@ -8,12 +8,13 @@ namespace Precog.Core
     {
         public static Result<Configuration> Open(string configFilePath)
         {
+            var configMap = new ExeConfigurationFileMap
+            {
+                ExeConfigFilename = configFilePath
+            };
+
             try
             {
-                var configMap = new ExeConfigurationFileMap
-                {
-                    ExeConfigFilename = configFilePath
-                };
                 var config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
 
                 return Result.Ok(config);
