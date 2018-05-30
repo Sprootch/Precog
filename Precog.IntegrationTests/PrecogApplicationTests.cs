@@ -42,6 +42,27 @@ namespace Precog.IntegrationTests
             var outputBox = _mainWindow.Get<TextBox>("outputTextBox");
             StringAssert.Contains(outputBox.Text, "Empty.config");
             StringAssert.Contains(outputBox.Text, "OK");
+
+            var progressBar = _mainWindow.Get<ProgressBar>("progressBar1");
+            Assert.AreEqual(100, progressBar.Value);
+        }
+
+        [TestMethod]
+        [DeploymentItem("TestData\\Invalid.config")]
+        public void CanDetectInvalidConfigFiles()
+        {
+            var textBox = _mainWindow.Get<TextBox>("pathTextBox");
+            textBox.Text = TestContext.TestDeploymentDir;
+
+            var button = _mainWindow.Get<Button>(SearchCriteria.ByText("Start"));
+            button.Click();
+
+            var outputBox = _mainWindow.Get<TextBox>("outputTextBox");
+            StringAssert.Contains(outputBox.Text, "Invalid.config");
+            StringAssert.Contains(outputBox.Text, "ERROR");
+
+            var progressBar = _mainWindow.Get<ProgressBar>("progressBar1");
+            Assert.AreEqual(100, progressBar.Value);
         }
     }
 }

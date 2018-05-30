@@ -1,8 +1,9 @@
 ﻿namespace Precog.Core
 {
-    public enum ConfigStatus
+    public enum Severity
     {
-        Undefined,
+        Info,
+        Warning,
         Success,
         Error
     }
