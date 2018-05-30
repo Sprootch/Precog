@@ -22,5 +22,25 @@ namespace Precog.MainForm.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projects\\Censy\\sources\\Deploy\\")]
+        public string DefaultDirectoryAppSetting {
+            get {
+                return ((string)(this["DefaultDirectoryAppSetting"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public string DefaultDirectoryUserSetting {
+            get {
+                return ((string)(this["DefaultDirectoryUserSetting"]));
+            }
+            set {
+                this["DefaultDirectoryUserSetting"] = value;
+            }
+        }
     }
 }

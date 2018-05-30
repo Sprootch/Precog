@@ -50,7 +50,6 @@
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.Size = new System.Drawing.Size(604, 20);
             this.pathTextBox.TabIndex = 0;
-            this.pathTextBox.Text = "C:\\Projects\\Censy\\sources\\Deploy\\";
             // 
             // button1
             // 

@@ -12,15 +12,20 @@ namespace Precog.MainForm
         public MainForm()
         {
             InitializeComponent();
+
+            pathTextBox.Text = string.IsNullOrWhiteSpace(Properties.Settings.Default.DefaultDirectoryUserSetting) 
+                ? Properties.Settings.Default.DefaultDirectoryAppSetting
+                : Properties.Settings.Default.DefaultDirectoryUserSetting;
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            SaveUserSettings();
+
             button1.Enabled = false;
             outputTextBox.ResetText();
             progressBar1.Value = 0;
 
-            bool error = false;
             try
             {
                 await CheckConfigFiles();
@@ -37,30 +42,18 @@ namespace Precog.MainForm
             }
         }
 
+        private void SaveUserSettings()
+        {
+            Properties.Settings.Default.DefaultDirectoryUserSetting = pathTextBox.Text;
+            Properties.Settings.Default.Save();
+        }
+
         private async Task CheckConfigFiles()
         {
             var checker = new ConfigFileChecker();
             checker.AddExcludes("NLog.config", "transform", "artifact_bkp", "artifact\\default", "OLD_CONFIG");
 
             await checker.CheckAsync(pathTextBox.Text, new ProgressDisplayer(this));
-
-            //bool error = false;
-            //foreach (var result in results)
-            //{
-            //    outputTextBox.AppendLine(result.ConfigFile);
-
-            //    if (result.Status == Severity.Success)
-            //    {
-            //        outputTextBox.AppendText(result.Result, Color.Green);
-            //    }
-            //    else
-            //    {
-            //        outputTextBox.AppendText(result.Result, Color.Red);
-            //        error = true;
-            //    }
-            //}
-
-            //return error;
         }
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
