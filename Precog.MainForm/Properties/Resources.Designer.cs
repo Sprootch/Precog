@@ -59,25 +59,5 @@ namespace Precog.MainForm.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap olho_grego {
-            get {
-                object obj = ResourceManager.GetObject("olho_grego", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon olho_grego_PIl_icon {
-            get {
-                object obj = ResourceManager.GetObject("olho_grego_PIl_icon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
     }
 }
