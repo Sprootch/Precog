@@ -5,13 +5,20 @@ namespace Precog.Core
 {
     public class Service : IEquatable<Service>
     {
-        public string Address { get; private set; }
-        public string Identity { get; private set; }
+        public string Address { get; }
+        public string Identity { get; }
+        public string Binding { get; }
 
-        public Service(string address, string identity)
+        public Service(string address, string identity, string binding = null)
         {
-            this.Address = address;
-            this.Identity = identity;
+            Address = address;
+            Identity = identity;
+            Binding = binding;
+        }
+
+        public override string ToString()
+        {
+            return string.Format($"- {Address}{Environment.NewLine}- {Identity}{Environment.NewLine}- {Binding}");
         }
 
         public override bool Equals(object obj)
