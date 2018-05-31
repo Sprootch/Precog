@@ -47,11 +47,16 @@ namespace Precog.Core
                 {
                     progress?.Report(ConfigMessage.Info(clientService.ToString()));
                     var generatedConfigFile = new RemoteConfigRetriever().GetRemoteConfiguration(clientService.Address);
-                    Thread.Sleep(1000);
+
                     var serverConfig = ConfigFileOpener.Open(generatedConfigFile).Value;
                     var serverServices = ServiceParser.GetServices(serverConfig);
 
-                    var correspondingService = serverServices.First(s => s.Binding == clientService.Binding);
+                    var correspondingService = serverServices.FirstOrDefault(s => s.Binding == clientService.Binding);
+                    if (correspondingService == null)
+                    {
+                        progress?.Report(ConfigMessage.Error("No matching service found!"));
+                        continue;
+                    }
 
                     if (!correspondingService.Equals(clientService))
                     {

@@ -24,6 +24,7 @@ namespace Precog.MainForm
 
             button1.Enabled = false;
             outputTextBox.ResetText();
+            progressBar1.SetState(ProgressBarColor.Green);
             progressBar1.Value = 0;
 
             try
