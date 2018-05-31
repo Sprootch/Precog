@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace Precog.Core
 {
@@ -23,8 +24,10 @@ namespace Precog.Core
 
             Process.Start(pInfo)
                 .WaitForExit(500);
-            
-            return _configFilePath;
+
+            return File.Exists(_configFilePath)
+                ? _configFilePath
+                : null;
         }
 
         private static void TryDeleteFile(string configFilePath)

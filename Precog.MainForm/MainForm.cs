@@ -92,6 +92,15 @@ namespace Precog.MainForm
                         Form.progressBar1.Update();
                         Form.progressBar1.Refresh();
                     }
+                    else if (message.Severity == Severity.Warning)
+                    {
+                        Form.outputTextBox.AppendLine(message.Message, Color.Orange);
+                        Form.progressBar1.Value = 100;
+                        Form.progressBar1.SetState(ProgressBarColor.Orange);
+                        Form.progressBar1.Invalidate();
+                        Form.progressBar1.Update();
+                        Form.progressBar1.Refresh();
+                    }
                     else
                     {
                         Form.outputTextBox.AppendLine(message.Message);

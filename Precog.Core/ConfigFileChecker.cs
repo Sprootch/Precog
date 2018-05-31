@@ -51,6 +51,11 @@ namespace Precog.Core
                     using (var remoteConfigRetriever = new RemoteConfigRetriever())
                     {
                         var generatedConfigFile = remoteConfigRetriever.GetRemoteConfiguration(clientService.Address);
+                        if (generatedConfigFile == null)
+                        {
+                            progress?.Report(ConfigMessage.Warning("Could not generate server config file!"));
+                            continue;
+                        }
                         var serverConfig = ConfigFileOpener.Open(generatedConfigFile).Value;
                         serverServices = ServiceParser.GetServices(serverConfig);
                     }
