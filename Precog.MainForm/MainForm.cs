@@ -88,8 +88,9 @@ namespace Precog.MainForm
                         Form.outputTextBox.AppendLine(message.Message, Color.Red);
                         Form.progressBar1.Value = 100;
                         Form.progressBar1.SetState(ProgressBarColor.Red);
-                        Form.progressBar1.Refresh();
                         Form.progressBar1.Invalidate();
+                        Form.progressBar1.Update();
+                        Form.progressBar1.Refresh();
                     }
                     else
                     {

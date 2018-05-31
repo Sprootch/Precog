@@ -46,10 +46,14 @@ namespace Precog.Core
                 foreach (var clientService in clientServices)
                 {
                     progress?.Report(ConfigMessage.Info(clientService.ToString()));
-                    var generatedConfigFile = new RemoteConfigRetriever().GetRemoteConfiguration(clientService.Address);
 
-                    var serverConfig = ConfigFileOpener.Open(generatedConfigFile).Value;
-                    var serverServices = ServiceParser.GetServices(serverConfig);
+                    IReadOnlyCollection<Service> serverServices;
+                    using (var remoteConfigRetriever = new RemoteConfigRetriever())
+                    {
+                        var generatedConfigFile = remoteConfigRetriever.GetRemoteConfiguration(clientService.Address);
+                        var serverConfig = ConfigFileOpener.Open(generatedConfigFile).Value;
+                        serverServices = ServiceParser.GetServices(serverConfig);
+                    }
 
                     var correspondingService = serverServices.FirstOrDefault(s => s.Binding == clientService.Binding);
                     if (correspondingService == null)

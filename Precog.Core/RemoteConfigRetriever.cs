@@ -1,14 +1,21 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Precog.Core
 {
-    public class RemoteConfigRetriever
+    public class RemoteConfigRetriever : IDisposable
     {
+        private readonly string _configFilePath;
+
+        public RemoteConfigRetriever()
+        {
+            _configFilePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".config");
+        }
+
         public string GetRemoteConfiguration(string serviceAddress)
         {
-            var configFilePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".config");
-            var pInfo = new ProcessStartInfo(@"svcutil.exe", $"{serviceAddress} /config:{configFilePath}")
+            var pInfo = new ProcessStartInfo(@"svcutil.exe", $"{serviceAddress} /config:{_configFilePath}")
             {
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden
@@ -17,7 +24,40 @@ namespace Precog.Core
             Process.Start(pInfo)
                 .WaitForExit(500);
             
-            return configFilePath;
+            return _configFilePath;
         }
+
+        private static void TryDeleteFile(string configFilePath)
+        {
+            try
+            {
+                File.Delete(configFilePath);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #region IDisposable
+
+        private bool disposed = false;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed) return;
+
+            if (disposing)
+            {
+                TryDeleteFile(_configFilePath);
+            }
+
+            disposed = true;
+        }
+        #endregion
     }
 }
