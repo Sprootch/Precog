@@ -18,9 +18,11 @@ namespace Precog.Core
             Binding = binding;
         }
 
+        public bool IsLocalHost => Address.Contains("localhost");
+
         public override string ToString()
         {
-            return $"- {Address}{Environment.NewLine}- {Identity}";
+            return $"- {Address}{Environment.NewLine}- {Identity ?? "Undefined"}";
         }
 
         public override bool Equals(object obj)

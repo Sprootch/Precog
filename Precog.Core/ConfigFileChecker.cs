@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Precog.Core
@@ -9,6 +8,12 @@ namespace Precog.Core
     public class ConfigFileChecker
     {
         DirectoryParser _directorParser = new DirectoryParser(new FileSystemEnumerator());
+        public event EventHandler<int> ProgressChanged;
+
+        protected virtual void OnProgressChanged(int i)
+        {
+            ProgressChanged?.Invoke(this, i);
+        }
 
         public void AddExcludes(params string[] excludes)
         {
@@ -21,10 +26,17 @@ namespace Precog.Core
             await Task.Run(() => ParseConfigFiles(files, progress));
         }
 
-        private static void ParseConfigFiles(IEnumerable<string> files, IProgress<ConfigMessage> progress = null)
+        private void ParseConfigFiles(IEnumerable<string> files, IProgress<ConfigMessage> progress = null)
         {
+            double i = 0;
+
             foreach (var file in files)
             {
+                i++;
+                //var percentage = (int)((i / files.Count()) * 100.0);
+                double dProgress = (i / files.Count()) * 100.0;
+                OnProgressChanged((int)dProgress);
+
                 progress.Report(ConfigMessage.Info(file));
                 var config = ConfigFileOpener.Open(file);
                 if (config.IsFailure)
@@ -46,6 +58,12 @@ namespace Precog.Core
                 foreach (var clientService in clientServices)
                 {
                     progress?.Report(ConfigMessage.Info(clientService.ToString()));
+                    if (clientService.IsLocalHost)
+                    {
+                        progress?.Report(ConfigMessage.Warning("WARNING"));
+                        progress?.Report(ConfigMessage.Warning("Service is localhost...Skipping..."));
+                        continue;
+                    }
 
                     IReadOnlyCollection<Service> serverServices;
                     using (var remoteConfigRetriever = new RemoteConfigRetriever())

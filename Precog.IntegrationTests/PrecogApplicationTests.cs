@@ -64,5 +64,20 @@ namespace Precog.IntegrationTests
             StringAssert.Contains(outputBox.Text, "ERROR");
             StringAssert.Contains(outputBox.Text, "NOT_MATCHED");
         }
+
+        [TestMethod]
+        [DeploymentItem("TestData\\LocalhostService.config")]
+        public void SkipLocalhostServices()
+        {
+            UI.DirectoryTextBox.Text = TestContext.TestDeploymentDir;
+
+            UI.StartButton.Click();
+
+            var outputBox = UI.OutputTextBox;
+            StringAssert.Contains(outputBox.Text, "LocalhostService.config");
+            StringAssert.Contains(outputBox.Text, "WARNING");
+            StringAssert.Contains(outputBox.Text, "Skip");
+            StringAssert.Contains(outputBox.Text, "localhost");
+        }
     }
 }
