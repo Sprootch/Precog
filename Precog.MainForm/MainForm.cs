@@ -113,20 +113,20 @@ namespace Precog.MainForm
                     if (_currentColor == ProgressBarColor.Green) _currentColor = ProgressBarColor.Orange;
 
                     Form.outputTextBox.AppendLine(message.Message, Color.Orange);
-                    Form.progressBar1.SetState(_currentColor);
-                    Form.progressBar1.Invalidate();
-                    Form.progressBar1.Update();
-                    Form.progressBar1.Refresh();
+                    //Form.progressBar1.SetState(_currentColor);
+                    //Form.progressBar1.Invalidate();
+                    //Form.progressBar1.Update();
+                    //Form.progressBar1.Refresh();
                 }
                 else if (message.Severity == Severity.Error)
                 {
                     _currentColor = ProgressBarColor.Red;
 
                     Form.outputTextBox.AppendLine(message.Message, Color.Red);
-                    Form.progressBar1.SetState(_currentColor);
-                    Form.progressBar1.Invalidate();
-                    Form.progressBar1.Update();
-                    Form.progressBar1.Refresh();
+                    //Form.progressBar1.SetState(_currentColor);
+                    //Form.progressBar1.Invalidate();
+                    //Form.progressBar1.Update();
+                    //Form.progressBar1.Refresh();
                 }
                 else
                 {

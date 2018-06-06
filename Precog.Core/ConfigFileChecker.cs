@@ -33,7 +33,6 @@ namespace Precog.Core
             foreach (var file in files)
             {
                 i++;
-                //var percentage = (int)((i / files.Count()) * 100.0);
                 double dProgress = (i / files.Count()) * 100.0;
                 OnProgressChanged((int)dProgress);
 
